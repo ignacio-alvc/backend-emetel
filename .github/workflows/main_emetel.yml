@@ -46,6 +46,7 @@ jobs:
         with:
           app-name: 'emetel'
           slot-name: 'Production'
-          package: ''
+          package: '.'
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+
 

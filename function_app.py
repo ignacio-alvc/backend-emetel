@@ -4,7 +4,6 @@ import os
 import json
 import pyodbc
 import datetime
-#from fikrfg
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
@@ -22,7 +21,7 @@ def json_converter(o):
         return o.isoformat()
 
 
-
+@app.function_name(name="getWorkers")
 @app.route(route="getWorkers")
 def getWorkers(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Función getWorkers (Python V2) procesando una petición.')

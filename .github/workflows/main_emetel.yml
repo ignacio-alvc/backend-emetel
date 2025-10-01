@@ -1,4 +1,3 @@
-
 name: Build and deploy Python project to Azure Function App - emetel
 
 on:
@@ -27,13 +26,9 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      # --- PASOS ELIMINADOS ---
+      # Ya no necesitas crear el venv ni hacer "pip install" aquí.
+      # La acción de Azure se encargará de esto automáticamente.
 
       - name: 'Deploy to Azure Functions'
         id: deploy-to-function

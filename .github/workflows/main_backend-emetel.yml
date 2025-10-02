@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'
   PYTHON_VERSION: '3.12'
 
 jobs:
@@ -15,21 +14,27 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-function.outputs.webapp-url }}
 
     steps:
-      - name: 'Checkout repository'
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 'Setup Python version'
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: 'Deploy to Azure Functions'
-        id: deploy-to-function
-        uses: Azure/functions-action@v1
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Archive function app
+        run: zip -r functionapp.zip .
+
+      - name: Deploy to Azure Function
+        uses: Azure/functions-action@v2
         with:
           app-name: 'backend-emetel'
-          package: '.'
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          package: 'functionapp.zip'

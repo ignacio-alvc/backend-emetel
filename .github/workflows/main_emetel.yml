@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'backend-emetel'  # Ruta a tu proyecto (la raíz está bien)
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'  # Ruta a tu proyecto (la raíz está bien)
   PYTHON_VERSION: '3.12'               # Versión de Python
 
 jobs:

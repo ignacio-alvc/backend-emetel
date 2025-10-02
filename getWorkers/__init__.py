@@ -1,12 +1,11 @@
-import azure.functions as func
 import logging
+import azure.functions as func
 import os
 import json
 import pyodbc
 import datetime
 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
-
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 CONN_STR = (
     f"DRIVER={{ODBC Driver 17 for SQL Server}};"
@@ -20,20 +19,16 @@ def json_converter(o):
     if isinstance(o, (datetime.date, datetime.datetime)):
         return o.isoformat()
 
-
-@app.route(route="getWorkers")
-def getWorkers(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Función getWorkers (Python V2) procesando una petición.')
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
 
     filter_state = req.params.get('estado')
-
     sql_query = "SELECT * FROM dbo.trabajador"
     params = []
 
     if filter_state:
         sql_query += " WHERE estado = ?"
         params.append(filter_state)
-
     results = []
     try:
         with pyodbc.connect(CONN_STR) as conn:

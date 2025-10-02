@@ -21,7 +21,6 @@ def json_converter(o):
         return o.isoformat()
 
 
-@app.function_name(name="getWorkers")
 @app.route(route="getWorkers")
 def getWorkers(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Función getWorkers (Python V2) procesando una petición.')
